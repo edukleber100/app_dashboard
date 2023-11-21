@@ -1,5 +1,11 @@
 $(document).ready(() => {
-	
+
+	$('#dashboard').on('click', () => {
+        $.post('dashboard.html', (data) => {
+            $('#pagina').html(data);
+        });
+    });
+
 	$('#documentacao').on('click', () => {
 		//$('#pagina').load('documentacao.html')
 

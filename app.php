@@ -6,6 +6,12 @@
 		public $data_fim;
 		public $numeroVendas;
 		public $totalVendas;
+		public $clientesAtivos;
+		public $clientesInativos;
+		public $reclamacoes;
+		public $elogios;
+		public $sugestao;
+		public $despesas;
 
 		public function __get($atributo) {
 			return $this->$atributo;
@@ -76,7 +82,56 @@
 
 			return $stmt->fetch(PDO::FETCH_OBJ)->total_vendas;
 		}
+
+		public function getClientesAtivos() {
+	        $query = 'SELECT COUNT(*) as cliente_ativo FROM tb_clientes WHERE cliente_ativo = 1';
+	        $stmt = $this->conexao->prepare($query);
+	        $stmt->execute();
+
+	        return $stmt->fetch(PDO::FETCH_OBJ)->cliente_ativo;
+    	}
+
+	    public function getClientesInativos() {
+	        $query = 'SELECT COUNT(*) as cliente_ativo FROM tb_clientes WHERE cliente_ativo = 0';
+	        $stmt = $this->conexao->prepare($query);
+	        $stmt->execute();
+
+	        return $stmt->fetch(PDO::FETCH_OBJ)->cliente_ativo;
+	    }
+
+	    public function getReclamacoes() {
+	        $query = 'SELECT COUNT(*) as total_reclamacoes FROM tb_reclamacoes';
+	        $stmt = $this->conexao->prepare($query);
+	        $stmt->execute();
+
+	        return $stmt->fetch(PDO::FETCH_OBJ)->total_reclamacoes;
+	    }
+
+	    public function getElogios() {
+	        $query = 'SELECT COUNT(*) as total_elogios FROM tb_elogios';
+	        $stmt = $this->conexao->prepare($query);
+	        $stmt->execute();
+
+	        return $stmt->fetch(PDO::FETCH_OBJ)->total_elogios;
+	    }
+
+	    public function getSugestoes() {
+	        $query = 'SELECT COUNT(*) as total_sugestoes FROM tb_sugestao';
+	        $stmt = $this->conexao->prepare($query);
+	        $stmt->execute();
+
+	        return $stmt->fetch(PDO::FETCH_OBJ)->total_sugestoes;
+	    }
+
+	    public function getDespesas() {
+	        $query = 'SELECT SUM(valor) as total_despesas FROM tb_despesas';
+	        $stmt = $this->conexao->prepare($query);
+	        $stmt->execute();
+
+	        return $stmt->fetch(PDO::FETCH_OBJ)->total_despesas;
+	    }
 	}
+	
 
 	//logica do script
 
@@ -97,6 +152,9 @@
 
 	$dashboard->__set('numeroVendas', $bd->getNumeroVendas());
 	$dashboard->__set('totalVendas', $bd->getTotalVendas());
+	$dashboard->__set('clientesAtivos', $bd->getClientesAtivos());
+	$dashboard->__set('clientesInativos', $bd->getClientesInativos());
+
 	echo json_encode($dashboard);
 	
 

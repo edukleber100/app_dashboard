@@ -37,6 +37,10 @@ $(document).ready(() => {
 				$('#totalVendas').html(dados.totalVendas)
 				$('#clientesAtivos').html(dados.clientesAtivos)
 				$('#clientesInativos').html(dados.clientesInativos)
+				$('#despesas').html(dados.despesas)
+				$('#reclamacoes').html(dados.reclamacoes)
+				$('#elogios').html(dados.elogios)
+				$('#sugestoes').html(dados.sugestoes)
 			},
 			error: erro => {console.log(erro)}
 		})
